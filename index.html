@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #question-container {
+            margin-bottom: 20px;
+        }
+
+        #question {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #ddd;
+        }
+
+        .option.selected {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result-container {
+            text-align: center;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            #question {
+                font-size: 1rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Time!</h1>
+        <div id="question-container">
+            <div id="question"></div>
+            <div class="options-container">
+                <div class="option" onclick="selectOption(0)"></div>
+                <div class="option" onclick="selectOption(1)"></div>
+                <div class="option" onclick="selectOption(2)"></div>
+                <div class="option" onclick="selectOption(3)"></div>
+            </div>
+        </div>
+        <button onclick="nextQuestion()">Next</button>
+        <div id="result-container">
+            <h2>Your Score:</h2>
+            <p id="score"></p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Berlin", "Paris", "Madrid"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is the largest planet in our solar system?",
+                options: ["Mars", "Jupiter", "Venus", "Saturn"],
+                correctAnswer: 1
+            },
+            {
+                question: "What is the chemical symbol for gold?",
+                options: ["Au", "Ag", "Fe", "Cu"],
+                correctAnswer: 0
+            },
+            {
+                question: "Who painted the Mona Lisa?",
+                options: ["Van Gogh", "Picasso", "Da Vinci", "Michelangelo"],
+                correctAnswer: 2
+            },
+            {
+                question: "What is the highest mountain in the world?",
+                options: ["K2", "Kangchenjunga", "Makalu", "Everest"],
+                correctAnswer: 3
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selected = null;
+
+        const questionElement = document.getElementById("question");
+        const optionsElements = document.querySelectorAll(".option");
+        const nextButton = document.querySelector("button");
+        const resultContainer = document.getElementById("result-container");
+        const scoreElement = document.getElementById("score");
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            questionElement.textContent = question.question;
+            for (let i = 0; i < optionsElements.length; i++) {
+                optionsElements[i].textContent = question.options[i];
+                optionsElements[i].classList.remove("selected");
+            }
+            selected = null;
+        }
+
+        function selectOption(optionIndex) {
+            if (selected !== null) {
+                optionsElements[selected].classList.remove("selected");
+            }
+            selected = optionIndex;
+            optionsElements[optionIndex].classList.add("selected");
+        }
+
+        function nextQuestion() {
+            if (selected === null) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            if (selected === questions[currentQuestion].correctAnswer) {
+                score++;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            questionElement.parentElement.style.display = "none";
+            nextButton.style.display = "none";
+            resultContainer.style.display = "block";
+            scoreElement.textContent = `${score} / ${questions.length}`;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
+```
+
+```md
+</html>
